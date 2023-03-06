@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+        <div class="d-flex justify-content-center container-fluid text-white" style="background-color: #ADD8E6;">
+            <h1 class="display-4">{% block title %}Room {% endblock title %} Availability</h1>
+        </div>
+
+    <div class="">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-secondary justify-content-center fw-bold pt-3 pb-3">
+    <div class="ps-5 pe-5">
+    <label class="text-white">
+        Total: {{total_rooms}}
+    </label>
+    </div>
+    <div class="pe-5">
+    <label class="text-white">
+        Booked: {{booked_rooms}}
+    </label>
+    </div>
+    <div class="pe-5">
+    <label class="text-white">
+        Vacancy: {{available_rooms}}
+    </label>
+    </div>
+    </nav>
+    </div>
+    <br>
+    <div class="ps-5">
+    <h1>Available Rooms</h1>
+    <table class="table table-hover">
+        <tr>
+            <th>Room Number</th>
+            <th>Price</th>
+            <th>Capacity</th>
+            {% if role =="Admin" or role=="Manager" or role=="Guest" %}
+            <th>More Options</th>
+            {% endif %}
+        </tr>
+        {% for room in available_records %}
+        <tr>
+            <td>{{room[0]}}</td>
+            <td>{{room[1]}}</td>
+            <td>{{room[2]}}</td>
+            {% if role == "Admin" or role == "Manager" or role == "Guest" %}
+            <td><button onclick="window.location.href='/reservation/{{room[0]}}';" class="btn btn-outline-primary btn-rounded">Book</button>
+                </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+    <div class="ps-5">
+    {% if role == "Admin" or role == "Manager" %}
+    <h1>Booked Rooms</h1>
+    <table class="table table-hover">
+        <tr>
+            <th>Guest</th>
+            <th>No of Guests</th>
+            <th>Room Number</th>
+            <th>Price</th>
+
+            <th>More Options</th>
+
+        </tr>
+
+        {% set count = -1 %}
+        {% for room in booked_records %}
+
+        <tr>
+            {% set count=loop.index-1 %}
+            <td> {{guest_records[count][0]}}</td>
+            <td>{{room[2]}}</td>
+            <td>{{room[0]}}</td>
+            <td>{{room[1]}}</td>
+
+            <td><button onclick="window.location.href='/cancellation/{{room[0]}}';" class="btn btn-outline-primary btn-rounded">Cancel</button>
+                </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+        </div>
+
+{% endblock content %}

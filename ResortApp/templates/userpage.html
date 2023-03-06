@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-center container-fluid text-white" style="background-color: #ADD8E6;">
+            <h1 class="display-4">Registered {% block title %}Users{% endblock title %}</h1>
+        </div>
+
+    <div class="">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-secondary justify-content-center fw-bold pb-5">
+    </nav>
+    </div>
+    <div class="d-flex justify-content-end align-items-center mb-3 mt-3 me-3">
+    <button  onclick="window.location.href='/new-user';" class="btn btn-primary btn-rounded">New</button>
+    </div>
+
+    <table class="table table-hover">
+        <tr>
+            <th>Guest name</th>
+            <th>Age</th>
+            <th>Contact number</th>
+            <th>Contact email</th>
+            <th>More Options</th>
+        </tr>
+        {% for guest in records %}
+        <tr>
+            <td>{{guest[0]}}</td>
+            <td>{{guest[1]}}</td>
+            <td>{{guest[2]}}</td>
+            <td>{{guest[3]}}</td>
+            <td><button class="btn btn-outline-primary" onclick="window.location.href='/remove/{{guest[0]}}';">Delete</button>
+                <button class="btn btn-outline-primary" onclick="window.location.href='/new-user?guest_name={{guest[0]}}';">update</button></td>
+        </tr>
+        {% endfor %}
+    </table>
+<br>
+{% endblock content %}
